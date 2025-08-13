@@ -1,0 +1,21 @@
+<!-- Elemen audio -->
+<audio id="bg-music" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+</audio>
+
+<script>
+    // Ambil elemen audio
+    const bgMusic = document.getElementById('bg-music');
+
+    // Fungsi untuk memutar musik
+    function playMusic() {
+        bgMusic.play().catch(err => {
+            console.log("Musik butuh interaksi user dulu:", err);
+        });
+    }
+
+    // Contoh: musik main setelah klik amplop
+    document.getElementById('envelope').addEventListener('click', () => {
+        playMusic();
+    });
+</script>

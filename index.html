@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surat Romantis</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: url('') no-repeat center center fixed;
+        background-size: cover;
+        overflow: hidden;
+        transition: background-image 1.5s ease-in-out;
+    }
+    .overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(255, 255, 255, 0.4);
+        z-index: 0;
+    }
+    .envelope {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        cursor: pointer;
+        animation: float 3s ease-in-out infinite;
+        z-index: 1;
+    }
+    @keyframes float {
+        0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+        50% { transform: translate(-50%, -50%) translateY(-10px); }
+    }
+    .message-container {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100vh;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        z-index: 1;
+    }
+    .message {
+        background: rgba(255, 255, 255, 0.85);
+        padding: 20px;
+        border-radius: 15px;
+        max-width: 600px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        white-space: pre-line;
+        font-size: 18px;
+        line-height: 1.6;
+        color: #444;
+    }
+    .falling {
+        position: fixed;
+        top: -50px;
+        animation: fall linear forwards;
+        z-index: 2;
+    }
+    @keyframes fall {
+        to {
+            transform: translateY(110vh) rotate(360deg);
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<img src="https://cdn-icons-png.flaticon.com/512/1057/1057097.png" class="envelope" id="envelope" alt="envelope">
+
+<div class="message-container" id="message-container">
+    <div class="message" id="message-text"></div>
+</div>
+
+<audio id="bg-music" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+</audio>
+
+<script>
+const sentences = [
+    "halloo sayangg aku mau cerita dikit boleh ya hehe...",
+    "aku suka semua tentang kamu, aku suka banget kalo kamu marahin aku, aku suka kalo kamu ingetin aku apapun itu,",
+    "maafin aku kalo suka buat masalah, maaf gara gara aku jadi sering berantem, tapi masalah apapun yang terjadi jangan pernah berfikir buat pergi yaa?",
+    "aku tau ko aku salah, aku ga bisa ngertiin kamu, aku selalu berlebihan selalu ovt sama kamu, karena aku ga pernah sesayaang ini sama orang.",
+    "aku minta maaf blom bisa nepatin omongan aku sendiri tapi aku masih mau belajar banyak, pokoknya aku minta maaf lagi dan lagi sama kamu.",
+    "Kalo kamu lagi ada masalah cerita sama akuyaa ? jangan pernah ngerasa kalo kamu sendirian karna ada aku disini, aku bakal bantu sebisa aku.",
+    "ohiya, aku baru sadar ternyata kalo aku bersyukur bisa sama kamu itu ternyata bikin aku makin seneng banget rasanya coba kamu rasain deh...",
+    "kamu ga perlu nanya lagi kalo aku sayang atau ngga sama kamu karna kamu udah pasti tau jawabannyaaaa,",
+    "makasi udah selalu buat aku seneng dengan perhatian perhatian kecil yang kamu kasih, aku bener bener beruntung banget bisa sama kamu,",
+    "ohiya aku harap kamu juga ngerasain hal yang sama yaaa, makaasii sayangg......💌"
+];
+
+const envelope = document.getElementById('envelope');
+const messageContainer = document.getElementById('message-container');
+const messageText = document.getElementById('message-text');
+const bgMusic = document.getElementById('bg-music');
+
+envelope.addEventListener('click', () => {
+    envelope.style.display = 'none';
+    messageContainer.style.display = 'flex';
+    bgMusic.play();
+    playLetters();
+    setInterval(createFallingElement, 500);
+});
+
+function playLetters() {
+    let fullText = sentences.join("\n\n");
+    let index = 0;
+    function type() {
+        if (index < fullText.length) {
+            messageText.innerHTML += fullText.charAt(index);
+            index++;
+            setTimeout(type, 50);
+        }
+    }
+    type();
+}
+
+function createFallingElement() {
+    const element = document.createElement('div');
+    element.classList.add('falling');
+    const types = ["🌸","🌷","🌹","💮","✨","⭐"];
+    element.textContent = types[Math.floor(Math.random() * types.length)];
+    element.style.left = Math.random() * 100 + "vw";
+    element.style.fontSize = Math.random() * 20 + 20 + "px";
+    element.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(element);
+    setTimeout(() => {
+        element.remove();
+    }, 6000);
+}
+
+// Ganti background otomatis
+const backgrounds = [
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1950&q=80",
+    "https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=1950&q=80",
+    "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=1950&q=80",
+    "https://images.unsplash.com/photo-1465146633011-14f18c72b735?auto=format&fit=crop&w=1950&q=80",
+    "https://images.unsplash.com/photo-1494783367193-149034c05e8f?auto=format&fit=crop&w=1950&q=80"
+];
+
+let bgIndex = 0;
+function changeBackground() {
+    document.body.style.backgroundImage = `url('${backgrounds[bgIndex]}')`;
+    bgIndex = (bgIndex + 1) % backgrounds.length;
+}
+changeBackground();
+setInterval(changeBackground, 5000); // ganti setiap 5 detik
+</script>
+
+</body>
+</html>
